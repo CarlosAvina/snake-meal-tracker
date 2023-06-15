@@ -1,0 +1,9 @@
+-- CreateTable
+CREATE TABLE "Snake" (
+    "id" TEXT NOT NULL PRIMARY KEY,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" DATETIME NOT NULL,
+    "name" TEXT NOT NULL,
+    "species" TEXT NOT NULL,
+    "lastMeal" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
