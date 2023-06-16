@@ -19,6 +19,7 @@ specifiers:
   autoprefixer: ^10.4.14
   eslint: ^8.40.0
   eslint-config-next: ^13.4.2
+  moment: ^2.29.4
   next: ^13.4.2
   postcss: ^8.4.21
   prettier: ^2.8.8
@@ -40,6 +41,7 @@ dependencies:
   '@trpc/next': 10.30.0_ysersxp4kor7rcfrjxfc23impm
   '@trpc/react-query': 10.30.0_lkk2e44pdcu7vdoxb7zkns4lme
   '@trpc/server': 10.30.0
+  moment: 2.29.4
   next: 13.4.5_biqbaboplfbrettd7655fr4n2y
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
@@ -2311,6 +2313,10 @@ packages:
   /minimist/1.2.8:
     resolution: {integrity: sha512-2yyAR8qBkN3YuheJanUpWC5U3bb5osDywNB8RzDVlDwDHbocAJveqqj1u8+SVD7jkWT4yvsHCpWqqWqAxb0zCA==}
     dev: true
+
+  /moment/2.29.4:
+    resolution: {integrity: sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==}
+    dev: false
 
   /ms/2.1.2:
     resolution: {integrity: sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==}

@@ -2,11 +2,11 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import { UserButton } from "@clerk/nextjs";
 import { api } from "~/utils/api";
-import type {Snake} from "@prisma/client"
+import type { Snake } from "@prisma/client"
 import Link from "next/link";
 
 const Home: NextPage = () => {
-  const {data} = api.snake.getAllSnakes.useQuery();
+  const { data } = api.snake.getAllSnakes.useQuery();
 
   return (
     <>
@@ -17,20 +17,20 @@ const Home: NextPage = () => {
       </Head>
       <header className="flex justify-between p-3">
         <UserButton afterSignOutUrl="/" />
-        <button className="bg-green-400 rounded-md p-3 text-white font-bold">
-        <Link href="/new-snake">New snake</Link>
-        </button>
+        <h1 className="font-extrabold text-4xl">Snake meal tracker</h1>
+        <Link href="/new-snake">
+          <button className='border-black border-2 bg-green-400 rounded-md p-3 text-white font-bold'>
+            New snake
+          </button>
+        </Link>
       </header>
-      <main>
-
-        {data?.snakes.length === 0 ? <p>No snakes in the list</p> : null}
-        <div className="grid grid-cols-4 p-2 gap-2">
+      <main className="grid grid-cols-4 p-2 gap-2 text-center">
+        {data?.snakes.length === 0 ? <div className="col-start-1 col-end-5 text-lg font-bold">No snakes in the list</div> : null}
         {data?.snakes?.map((snake: Snake) => {
-          return <Link key={snake.id} href={`/snake/${snake.id}`} className="border-2 border-black rounded-md">
+          return <Link key={snake.id} href={`/snake/${snake.id}`} className="border-2 border-black rounded-md text-lg font-semibold">
             {snake.name}
           </Link>
         })}
-        </div>
       </main>
     </>
   );
