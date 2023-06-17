@@ -6,7 +6,7 @@ import { api } from "~/utils/api";
 
 const SnakeInfo = () => {
     const router = useRouter();
-    const utils = api.useContext();;
+    const utils = api.useContext();
 
     const id = router.query.id?.toString();
 
