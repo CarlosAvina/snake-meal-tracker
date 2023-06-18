@@ -1,0 +1,6 @@
+import type { NextApiRequest, NextApiResponse } from "next";
+
+export default function handler(req: NextApiRequest, res: NextApiResponse) {
+    console.log("Cron job");
+    res.status(200).end('Cool!');
+}
