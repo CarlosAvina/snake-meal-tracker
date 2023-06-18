@@ -23,7 +23,7 @@ const NewSnake = () => {
         mutateSnake.mutate({ name, species });
     }
 
-    return <form onSubmit={onSubmit} className="flex flex-col gap-5 text-center p-6 w-2/5 m-auto">
+    return <form onSubmit={onSubmit} className="flex flex-col gap-5 text-center p-6 w-4/5 md:w-2/5 m-auto">
         <h1 className='font-bold text-4xl'>Create a new snake</h1>
         <input className="border-2 border-black rounded-md p-2" name="name" type="text" placeholder="Name" required />
         <input className="border-2 border-black rounded-md p-2" name="species" type="text" placeholder="Species" required />
