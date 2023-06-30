@@ -6,6 +6,9 @@ import { prisma } from "~/server/db";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
+const senderEmail = process.env.RESEND_SENDER_EMAIL || "";
+const receiverEmail = process.env.RESEND_RECEIVER_EMAIL || "";
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 
     try {
@@ -30,8 +33,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             const snakeNames = snakesToFeed.join(', ');
 
             const data = await resend.emails.send({
-                from: "onboarding@resend.dev",
-                to: "delivered@resend.dev",
+                from: senderEmail,
+                to: receiverEmail,
                 subject: "Time to feed your snakes",
                 html: "<strong>It works!</strong>",
                 react: EmailTemplate({ snakeName: snakeNames }),
