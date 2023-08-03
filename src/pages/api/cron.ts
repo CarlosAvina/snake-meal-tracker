@@ -43,6 +43,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             res.status(200).json(data);
         }
 
+        await resend.emails.send({
+            from: senderEmail,
+            to: receiverEmail,
+            subject: "Time to feed your snakes",
+            html: "<strong>It works!</strong>",
+        });
+
         res.status(200).json({ message: 'Not sending email' });
     } catch (error) {
         res.status(400).json(error);
