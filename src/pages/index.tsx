@@ -18,11 +18,18 @@ const Home: NextPage = () => {
       <header className="flex justify-between p-3 text-center items-center gap-3">
         <UserButton afterSignOutUrl="/" />
         <h1 className="font-extrabold text-2xl md:text-4xl">Snake meal tracker</h1>
-        <Link href="/new-snake">
-          <button className='border-black border-2 bg-green-400 rounded-md p-3 text-white font-bold'>
-            New snake
-          </button>
-        </Link>
+        <div className="flex gap-2">
+          <Link href="/new-snake">
+            <button className='border-black border-2 bg-green-400 rounded-md p-3 text-white font-bold'>
+              New snake
+            </button>
+          </Link>
+          <Link href="/config">
+            <button className='border-black border-2 bg-slate-400 rounded-md p-3 text-white font-bold'>
+              Config
+            </button>
+          </Link>
+        </div>
       </header>
       <main className="grid grid-cols-4 p-2 gap-2 text-center">
         {data?.snakes.length === 0 ? <div className="col-start-1 col-end-5 text-lg font-bold">No snakes in the list</div> : null}
