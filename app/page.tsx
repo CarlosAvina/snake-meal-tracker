@@ -8,6 +8,8 @@ function toTitleCase(str: string) {
   return str[0].toUpperCase() + str.slice(1);
 }
 
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   const snakes = await sql`SELECT * FROM snakes ORDER BY id ASC`;
 
