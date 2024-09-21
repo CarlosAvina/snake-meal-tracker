@@ -36,7 +36,7 @@ function FeedButton({
           setLastMeal(result[0].lastmeal);
         }}
       >
-        Feed
+        Feed in
       </button>
       <select
         className="bg-red-600 text-white p-3 rounded-r-md"
@@ -48,7 +48,7 @@ function FeedButton({
       >
         {options.map((value) => (
           <option key={value} value={value}>
-            {value}
+            {value} day(s)
           </option>
         ))}
       </select>

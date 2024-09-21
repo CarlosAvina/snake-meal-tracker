@@ -25,7 +25,7 @@ function SnakeCardContent({ id, lastmeal, mealdayinterval }: Props) {
       </label>
       <label className="border-black border rounded-lg p-6 w-full">
         <b>Next meal:</b>
-        <p>{moment(lastMealDate).add(selectedInterval, "days").fromNow()}</p>
+        <p>{moment(lastMealDate).add(mealdayinterval, "days").fromNow()}</p>
       </label>
       <div className="w-max">
         <FeedButton
