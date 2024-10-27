@@ -2,6 +2,8 @@ import React from "react";
 import SnakeCardContent from "./components/SnakeCardContent";
 import { getSnakes } from "@/drizzle/db";
 
+export const fetchCache = "force-no-store";
+
 function toTitleCase(text: string): string {
   return text[0].toUpperCase() + text.slice(1);
 }
