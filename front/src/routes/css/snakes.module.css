@@ -1,0 +1,30 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: left;
+  border: 2px solid black;
+  border-radius: 15px;
+  padding: 20px;
+}
+
+.cardElements {
+  display: flex;
+  gap: 10px;
+}
+
+.cardActions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.snakeId {
+  display: none;
+}
