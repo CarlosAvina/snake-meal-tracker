@@ -28,7 +28,7 @@ export default function Login() {
     const res = await fetch(request);
     const data = await res.json();
 
-    if (data.status === "ok") {
+    if (data.status === true) {
       return navigate("/snakes");
     }
 

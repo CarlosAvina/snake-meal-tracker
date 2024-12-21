@@ -2,3 +2,6 @@ node_modules
 api/seed.js
 .env.local
 .env
+personal.pem
+deploy.sh
+
