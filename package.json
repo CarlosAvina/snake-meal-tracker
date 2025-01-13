@@ -6,12 +6,7 @@
   "scripts": {
     "api": "cd api && npm run start",
     "front": "cd front && npm run dev",
-    "app": "npm run api && npm run front",
-    "prepare": "husky"
   },
   "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "husky": "^9.1.7"
-  }
+  "license": "ISC"
 }

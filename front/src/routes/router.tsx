@@ -3,6 +3,8 @@ import Login from "./login";
 import Snakes from "./snakes";
 import History from "./history";
 
+const baseUrl = import.meta.env.VITE_BASE_URL;
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -12,7 +14,7 @@ const router = createBrowserRouter([
     path: "/snakes",
     element: <Snakes />,
     loader: async () => {
-      return fetch("http://localhost:3000/snakes");
+      return fetch(`${baseUrl}/snakes`);
     },
     action: async ({ request }) => {
       const formData = await request.formData();
@@ -24,7 +26,7 @@ const router = createBrowserRouter([
       const nextmeal = next.toISOString().slice(0, 19).replace("T", " ");
       const lastmeal = new Date().toISOString().slice(0, 19).replace("T", " ");
 
-      const newRequest = new Request("http://localhost:3000/feed_snake", {
+      const newRequest = new Request(`${baseUrl}/feed_snake`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -49,7 +51,7 @@ const router = createBrowserRouter([
 
       if (!snakeId) throw Error("Missing param");
 
-      const url = new URL("http:localhost:3000/meal_history");
+      const url = new URL(`${baseUrl}/meal_history`);
       url.searchParams.append("snakeId", snakeId);
 
       return fetch(url);

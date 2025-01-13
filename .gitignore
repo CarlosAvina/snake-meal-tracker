@@ -1,7 +1,10 @@
 node_modules
 api/seed.js
+api/seed.sql
 .env.local
 .env
 personal.pem
 deploy.sh
-
+fly.toml
+Dockerfile
+Dockerfile.production

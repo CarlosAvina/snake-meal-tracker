@@ -11,7 +11,7 @@ const getSnakesQuery = `
     on s.snakeId = r.snakeId;
   `;
 
-const insertRecord = `insert into records (lastmeal, nextmeal, snakeId) value (?, ?, ?);`;
+const insertRecord = `insert into records (lastmeal, nextmeal, snakeId) values (?, ?, ?);`;
 
 const getSnakeHistory = `select * from records where snakeId = ? order by recordId desc;`;
 

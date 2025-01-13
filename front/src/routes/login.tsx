@@ -2,6 +2,8 @@ import { SyntheticEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./css/login.module.css";
 
+const url = import.meta.env.VITE_BASE_URL;
+
 export default function Login() {
   const navigate = useNavigate();
 
@@ -14,7 +16,7 @@ export default function Login() {
     if (!username || !password)
       throw Error("username and passwords are mandatory fields");
 
-    const request = new Request("http://localhost:3000/login", {
+    const request = new Request(`${url}/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

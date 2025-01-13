@@ -1,10 +1,10 @@
-const mysql = require("mysql2");
+const { createClient } = require("@libsql/client");
 
-const connection = mysql.createConnection({
-  host: "localhost",
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  multipleStatements: true,
+const turso = createClient({
+  url: process.env.TURSO_DATABASE_URL,
+  authToken: process.env.TURSO_AUTH_TOKEN,
 });
 
-module.exports = connection;
+module.exports = {
+  turso,
+};

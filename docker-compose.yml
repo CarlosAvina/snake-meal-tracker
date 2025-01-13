@@ -1,0 +1,29 @@
+services:
+  backend:
+    build:
+      context: ./api
+    ports:
+      - 3000:3000
+    develop:
+      watch:
+        - action: sync
+          path: ./api
+          target: ./app
+          ignore:
+            - node_modules
+            - package-lock.json
+            - fly.toml
+            - Dockerfile
+            - Dockerfile.production
+
+  front:
+    build:
+      context: ./front
+    ports:
+      - 5173:5173
+    depends_on:
+      - backend
+
+networks:
+  default:
+    driver: bridge

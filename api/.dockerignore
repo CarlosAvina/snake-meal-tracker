@@ -1,0 +1,6 @@
+node_modules
+seed.js
+seed.sql
+.dockerignore
+.env
+fly.toml
