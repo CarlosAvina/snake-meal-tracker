@@ -1,6 +1,7 @@
 import { useLoaderData, Form, Link } from "react-router-dom";
 import styles from "./css/snakes.module.css";
 import { formatUTCDateISO } from "../utils/date";
+import { formatDistance, subDays, addDays } from "date-fns";
 
 type Snake = {
   snakeId: number;
@@ -16,7 +17,7 @@ export default function Snakes() {
 
   return (
     <div className={styles.list}>
-      <h1>My snakes</h1>
+      <h1>My snakes :)</h1>
       {snakes.map((snake) => {
         return (
           <Form key={snake.snakeId} className={styles.card} method="post">
@@ -29,11 +30,19 @@ export default function Snakes() {
               />
               <div>
                 <b>Last meal</b>
-                <p>{formatUTCDateISO(new Date(snake.lastmeal))}</p>
+                <p>
+                  {formatDistance(new Date(snake.lastmeal), new Date(), {
+                    addSuffix: true,
+                  })}
+                </p>
               </div>
               <div>
                 <b>Next meal</b>
-                <p>{formatUTCDateISO(new Date(snake.nextmeal))}</p>
+                <p>
+                  {formatDistance(new Date(snake.nextmeal), new Date(), {
+                    addSuffix: true,
+                  })}
+                </p>
               </div>
               <div className={styles.cardActions}>
                 <button type="submit">Feed</button>

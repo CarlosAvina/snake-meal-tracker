@@ -23,8 +23,8 @@ const router = createBrowserRouter([
       const NEXT_IN_DAYS = 8;
       const next = new Date();
       next.setDate(next.getDate() + NEXT_IN_DAYS);
-      const nextmeal = next.toISOString().slice(0, 19).replace("T", " ");
-      const lastmeal = new Date().toISOString().slice(0, 19).replace("T", " ");
+      const nextmeal = next.toISOString();
+      const lastmeal = new Date().toISOString();
 
       const newRequest = new Request(`${baseUrl}/feed_snake`, {
         method: "POST",
