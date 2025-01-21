@@ -1,7 +1,6 @@
 import { useLoaderData, Form, Link } from "react-router-dom";
 import styles from "./css/snakes.module.css";
-import { formatUTCDateISO } from "../utils/date";
-import { formatDistance, subDays, addDays } from "date-fns";
+import { formatDistance } from "date-fns";
 
 type Snake = {
   snakeId: number;
