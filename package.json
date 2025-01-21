@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "api": "cd api && npm run start",
-    "front": "cd front && npm run dev",
+    "front": "cd front && npm run dev"
   },
   "author": "",
   "license": "ISC"
