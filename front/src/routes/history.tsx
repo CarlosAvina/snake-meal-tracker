@@ -1,4 +1,5 @@
-import { useLoaderData } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { formatUTCDateISO } from "../utils/date";
 import styles from "./css/history.module.css";
 
@@ -9,10 +10,41 @@ type Record = {
   snakeId: number;
 };
 
-export default function History() {
-  const history = useLoaderData() as Record[];
+const baseUrl = import.meta.env.VITE_BASE_URL;
 
-  if (!history || !Array.isArray(history)) return null;
+export default function History() {
+  const [history, setHistory] = useState<Record[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<Error | null>(null);
+  const params = useParams();
+
+  useEffect(() => {
+    async function fetchHistory() {
+      setIsLoading(true);
+      const snakeId = params.snakeId;
+
+      if (!snakeId) {
+        const error = new Error("Missing param: snakeId");
+        setError(error);
+        setIsLoading(false);
+        return;
+      }
+
+      const url = new URL(`${baseUrl}/meal_history`);
+      url.searchParams.append("snakeId", snakeId);
+
+      const res = await fetch(url);
+      const data = await res.json();
+      setHistory(data);
+      setIsLoading(false);
+    }
+    fetchHistory();
+  }, []);
+
+  if (isLoading) return <h1>Loading...</h1>;
+  if (error) return <h1>{error.message}</h1>;
+  if (history.length === 0 || !history || !Array.isArray(history))
+    return <h1>No items</h1>;
 
   return (
     <div className={styles.layout}>

@@ -46,17 +46,6 @@ const router = createBrowserRouter([
   {
     path: "/history/snake/:snakeId",
     element: <History />,
-    loader: ({ params }) => {
-      const snakeId = params.snakeId;
-
-      if (!snakeId) throw Error("Missing param");
-
-      const url = new URL(`${baseUrl}/meal_history`);
-      url.searchParams.append("snakeId", snakeId);
-
-      return fetch(url);
-    },
-    errorElement: <h1>Error :(</h1>,
   },
 ]);
 
