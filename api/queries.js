@@ -8,7 +8,8 @@ const getSnakesQuery = `
     on r.snakeId = max_dates.snakeId
     and r.lastmeal = max_dates.max_lastmeal
     inner join snakes as s
-    on s.snakeId = r.snakeId;
+    on s.snakeId = r.snakeId
+    order by s.snakeId asc;
   `;
 
 const insertRecord = `insert into records (lastmeal, nextmeal, snakeId) values (?, ?, ?);`;
