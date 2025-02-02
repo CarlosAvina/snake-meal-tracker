@@ -13,9 +13,6 @@ const router = createBrowserRouter([
   {
     path: "/snakes",
     element: <Snakes />,
-    loader: async () => {
-      return fetch(`${baseUrl}/snakes`);
-    },
     action: async ({ request }) => {
       const formData = await request.formData();
       const snakeId = Number(formData.get("snakeId")?.toString());

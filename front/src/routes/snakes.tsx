@@ -1,4 +1,5 @@
-import { useLoaderData, Form, Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Form, Link } from "react-router-dom";
 import styles from "./css/snakes.module.css";
 import { formatDistance } from "date-fns";
 
@@ -9,10 +10,26 @@ type Snake = {
   nextmeal: string;
 };
 
-export default function Snakes() {
-  const snakes = useLoaderData() as Snake[];
+const baseUrl = import.meta.env.VITE_BASE_URL;
 
-  if (!snakes || !Array.isArray(snakes)) return null;
+export default function Snakes() {
+  const [snakes, setSnakes] = useState<Snake[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    async function fetchSnakes() {
+      setLoading(true);
+      const res = await fetch(`${baseUrl}/snakes`);
+      const data = await res.json();
+      setSnakes(data);
+      setLoading(false);
+    }
+    fetchSnakes();
+  }, []);
+
+  if (loading) return <h1>Loading...</h1>;
+  if (snakes.length === 0 || !snakes || !Array.isArray(snakes))
+    return <h1>No snakes...</h1>;
 
   return (
     <div className={styles.list}>
