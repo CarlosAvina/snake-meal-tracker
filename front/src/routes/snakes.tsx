@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { Form, Link } from "react-router-dom";
+import { useState, useEffect, SyntheticEvent } from "react";
+import { Link } from "react-router-dom";
 import styles from "./css/snakes.module.css";
 import { formatDistance } from "date-fns";
 
@@ -11,10 +11,39 @@ type Snake = {
 };
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
+const NEXT_IN_DAYS = 8;
 
 export default function Snakes() {
   const [snakes, setSnakes] = useState<Snake[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+
+  async function onSubmit(e: SyntheticEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+    const snakeId = Number(formData.get("snakeId")?.toString());
+
+    const next = new Date();
+    next.setDate(next.getDate() + NEXT_IN_DAYS);
+    const nextmeal = next.toISOString();
+    const lastmeal = new Date().toISOString();
+
+    const newRequest = new Request(`${baseUrl}/feed_snake`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        snakeId,
+        lastmeal,
+        nextmeal,
+      }),
+    });
+
+    const response = await fetch(newRequest);
+    const data = await response.json();
+    setSnakes(data);
+  }
 
   useEffect(() => {
     async function fetchSnakes() {
@@ -36,7 +65,7 @@ export default function Snakes() {
       <h1>My snakes :)</h1>
       {snakes.map((snake) => {
         return (
-          <Form key={snake.snakeId} className={styles.card} method="post">
+          <form key={snake.snakeId} className={styles.card} onSubmit={onSubmit}>
             <b>{snake.name.toUpperCase()}</b>
             <div className={styles.cardElements}>
               <input
@@ -69,7 +98,7 @@ export default function Snakes() {
                 </Link>
               </div>
             </div>
-          </Form>
+          </form>
         );
       })}
     </div>
