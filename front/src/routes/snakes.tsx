@@ -44,7 +44,9 @@ export default function Snakes() {
                 </p>
               </div>
               <div className={styles.cardActions}>
-                <button type="submit">Feed</button>
+                <button className={styles.feedButton} type="submit">
+                  Feed
+                </button>
                 <Link to={`/history/snake/${snake.snakeId}`}>
                   <button>History</button>
                 </Link>

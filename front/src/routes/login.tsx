@@ -1,10 +1,11 @@
-import { SyntheticEvent } from "react";
+import { SyntheticEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./css/login.module.css";
 
 const url = import.meta.env.VITE_BASE_URL;
 
 export default function Login() {
+  const [isSigningIn, setIsSigningIn] = useState(false);
   const navigate = useNavigate();
 
   async function onSubmit(e: SyntheticEvent<HTMLFormElement>) {
@@ -16,6 +17,11 @@ export default function Login() {
     if (!username || !password)
       throw Error("username and passwords are mandatory fields");
 
+    setIsSigningIn(true);
+    await loginAction(username, password);
+  }
+
+  async function loginAction(username: string, password: string) {
     const request = new Request(`${url}/login`, {
       method: "POST",
       headers: {
@@ -29,6 +35,7 @@ export default function Login() {
 
     const res = await fetch(request);
     const data = await res.json();
+    setIsSigningIn(false);
 
     if (data.status === true) {
       return navigate("/snakes");
@@ -43,7 +50,7 @@ export default function Login() {
       <input type="text" name="username" placeholder="username" />
       <label htmlFor="password">Password</label>
       <input type="password" name="password" placeholder="password" />
-      <button type="submit">Login</button>
+      <button type="submit">{isSigningIn ? "Signing in..." : "Sign in"}</button>
     </form>
   );
 }
