@@ -10,12 +10,26 @@ type Snake = {
   nextmeal: string;
 };
 
+type State = {
+  snakes: Snake[];
+  loading: boolean;
+  error: Error | null;
+  feedingSnakes: number[];
+};
+
 const baseUrl = import.meta.env.VITE_BASE_URL;
 const NEXT_IN_DAYS = 8;
 
+const initialState: State = {
+  snakes: [],
+  loading: false,
+  error: null,
+  feedingSnakes: [],
+};
+
 export default function Snakes() {
-  const [snakes, setSnakes] = useState<Snake[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [state, setState] = useState<State>(initialState);
+  const { snakes, loading, feedingSnakes } = state;
 
   async function onSubmit(e: SyntheticEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -28,6 +42,10 @@ export default function Snakes() {
     const nextmeal = next.toISOString();
     const lastmeal = new Date().toISOString();
 
+    setState((prev) => ({
+      ...prev,
+      feedingSnakes: prev.feedingSnakes.concat(snakeId),
+    }));
     const newRequest = new Request(`${baseUrl}/feed_snake`, {
       method: "POST",
       headers: {
@@ -42,16 +60,19 @@ export default function Snakes() {
 
     const response = await fetch(newRequest);
     const data = await response.json();
-    setSnakes(data);
+    setState((prev) => ({
+      ...prev,
+      snakes: data,
+      feedingSnakes: prev.feedingSnakes.filter((id) => id !== snakeId),
+    }));
   }
 
   useEffect(() => {
     async function fetchSnakes() {
-      setLoading(true);
+      setState((prev) => ({ ...prev, loading: true }));
       const res = await fetch(`${baseUrl}/snakes`);
       const data = await res.json();
-      setSnakes(data);
-      setLoading(false);
+      setState((prev) => ({ ...prev, snakes: data, loading: false }));
     }
     fetchSnakes();
   }, []);
@@ -91,7 +112,9 @@ export default function Snakes() {
               </div>
               <div className={styles.cardActions}>
                 <button className={styles.feedButton} type="submit">
-                  Feed
+                  {feedingSnakes.some((id) => id === snake.snakeId)
+                    ? "Feeding..."
+                    : "Feed"}
                 </button>
                 <Link to={`/history/snake/${snake.snakeId}`}>
                   <button>History</button>
