@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { formatUTCDateISO } from "../utils/date";
 import styles from "./css/history.module.css";
 
@@ -17,6 +17,7 @@ export default function History() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error | null>(null);
   const params = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchHistory() {
@@ -33,7 +34,14 @@ export default function History() {
       const url = new URL(`${baseUrl}/meal_history`);
       url.searchParams.append("snakeId", snakeId);
 
-      const res = await fetch(url);
+      const res = await fetch(url, {
+        credentials: "include",
+      });
+
+      if (!res.ok && res.status === 403) {
+        return navigate("/");
+      }
+
       const data = await res.json();
       setHistory(data);
       setIsLoading(false);

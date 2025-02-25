@@ -1,5 +1,5 @@
 import { useState, useEffect, SyntheticEvent } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./css/snakes.module.css";
 import { formatDistance } from "date-fns";
 
@@ -30,6 +30,7 @@ const initialState: State = {
 export default function Snakes() {
   const [state, setState] = useState<State>(initialState);
   const { snakes, loading, feedingSnakes } = state;
+  const navigate = useNavigate();
 
   async function onSubmit(e: SyntheticEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -70,7 +71,12 @@ export default function Snakes() {
   useEffect(() => {
     async function fetchSnakes() {
       setState((prev) => ({ ...prev, loading: true }));
-      const res = await fetch(`${baseUrl}/snakes`);
+      const res = await fetch(`${baseUrl}/snakes`, { credentials: "include" });
+
+      if (!res.ok && res.status === 403) {
+        return navigate("/");
+      }
+
       const data = await res.json();
       setState((prev) => ({ ...prev, snakes: data, loading: false }));
     }

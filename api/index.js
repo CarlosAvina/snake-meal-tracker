@@ -2,6 +2,8 @@ const { turso } = require("./db.js");
 const express = require("express");
 const cors = require("cors");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
 const app = express();
 
 const {
@@ -11,13 +13,35 @@ const {
   authUser,
 } = require("./queries.js");
 const port = process.env.API_PORT;
+const secret = process.env.SECRET_TOKEN;
+const environment = process.env.ENV;
 
-app.use(express.json(), cors());
+app.use(
+  express.json(),
+  cors({
+    origin: ["http://localhost:5173", "https://snakes.carlosavina.dev"],
+    credentials: true,
+  }),
+  cookieParser(),
+);
 app.listen(port, () => {
   console.log("Starting server in port: ", port);
 });
 
-app.get("/snakes", async (_, res) => {
+const authorization = (req, res, next) => {
+  const token = req.cookies.access_token;
+  if (!token) {
+    return res.sendStatus(403);
+  }
+  try {
+    jwt.verify(token, secret);
+    return next();
+  } catch (err) {
+    return res.sendStatus(403);
+  }
+};
+
+app.get("/snakes", authorization, async (_, res) => {
   try {
     const { rows } = await turso.execute(getSnakesQuery);
     return res.send(rows);
@@ -26,7 +50,7 @@ app.get("/snakes", async (_, res) => {
   }
 });
 
-app.post("/feed_snake", async (req, res) => {
+app.post("/feed_snake", authorization, async (req, res) => {
   const { lastmeal, nextmeal, snakeId } = req.body;
 
   if (!lastmeal || !nextmeal || !snakeId) {
@@ -53,7 +77,7 @@ app.post("/feed_snake", async (req, res) => {
   }
 });
 
-app.get("/meal_history", async (req, res) => {
+app.get("/meal_history", authorization, async (req, res) => {
   const { snakeId } = req.query;
 
   if (!snakeId)
@@ -92,7 +116,18 @@ app.post("/login", async (req, res) => {
         return res.status(400).json({ message: "Wrong user or password" });
       }
 
-      return res.status(200).json({ status: result });
+      const token = jwt.sign({ username }, secret, { expiresIn: "1h" });
+      return res
+        .cookie("access_token", token, {
+          httpOnly: true,
+          secure: true,
+          path: "/",
+          domain:
+            environment === "production" ? "carlosavina.dev" : "localhost",
+          sameSite: "lax",
+        })
+        .status(200)
+        .json({ status: result });
     });
   } catch (error) {
     return res.status(400).json({ message: error.message });

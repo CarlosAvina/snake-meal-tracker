@@ -31,6 +31,7 @@ export default function Login() {
         username,
         password,
       }),
+      credentials: "include",
     });
 
     const res = await fetch(request);
