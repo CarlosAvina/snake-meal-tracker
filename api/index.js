@@ -123,7 +123,7 @@ app.post("/login", async (req, res) => {
           secure: true,
           path: "/",
           domain:
-            environment === "production" ? "carlosavina.dev" : "localhost",
+            environment === "production" ? ".carlosavina.dev" : "localhost",
           sameSite: "lax",
         })
         .status(200)
