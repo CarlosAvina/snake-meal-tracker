@@ -124,7 +124,7 @@ app.post("/login", async (req, res) => {
           path: "/",
           domain:
             environment === "production"
-              ? "snakes.carlosavina.dev"
+              ? "api-hidden-dream-958.fly.dev"
               : "localhost",
           sameSite: "none",
         })
