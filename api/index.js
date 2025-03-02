@@ -124,7 +124,7 @@ app.post("/login", async (req, res) => {
           path: "/",
           domain:
             environment === "production" ? ".carlosavina.dev" : "localhost",
-          sameSite: "lax",
+          sameSite: "none",
         })
         .status(200)
         .json({ status: result });
