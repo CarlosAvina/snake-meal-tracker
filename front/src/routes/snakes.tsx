@@ -57,6 +57,7 @@ export default function Snakes() {
         lastmeal,
         nextmeal,
       }),
+      credentials: "include",
     });
 
     const response = await fetch(newRequest);
