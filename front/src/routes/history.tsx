@@ -10,8 +10,6 @@ type Record = {
   snakeId: number;
 };
 
-const baseUrl = import.meta.env.VITE_BASE_URL;
-
 export default function History() {
   const [history, setHistory] = useState<Record[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -31,12 +29,7 @@ export default function History() {
         return;
       }
 
-      const url = new URL(`${baseUrl}/meal_history`);
-      url.searchParams.append("snakeId", snakeId);
-
-      const res = await fetch(url, {
-        credentials: "include",
-      });
+      const res = await fetch(`/api/meal_history?snakeId=${snakeId}`);
 
       if (!res.ok && res.status === 403) {
         return navigate("/");

@@ -17,7 +17,6 @@ type State = {
   feedingSnakes: number[];
 };
 
-const baseUrl = import.meta.env.VITE_BASE_URL;
 const NEXT_IN_DAYS = 8;
 
 const initialState: State = {
@@ -47,7 +46,7 @@ export default function Snakes() {
       ...prev,
       feedingSnakes: prev.feedingSnakes.concat(snakeId),
     }));
-    const newRequest = new Request(`${baseUrl}/feed_snake`, {
+    const newRequest = new Request("/api/feed_snake", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -57,7 +56,6 @@ export default function Snakes() {
         lastmeal,
         nextmeal,
       }),
-      credentials: "include",
     });
 
     const response = await fetch(newRequest);
@@ -72,7 +70,7 @@ export default function Snakes() {
   useEffect(() => {
     async function fetchSnakes() {
       setState((prev) => ({ ...prev, loading: true }));
-      const res = await fetch(`${baseUrl}/snakes`, { credentials: "include" });
+      const res = await fetch("/api/snakes");
 
       if (!res.ok && res.status === 403) {
         return navigate("/");

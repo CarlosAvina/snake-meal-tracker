@@ -24,7 +24,7 @@ app.listen(port, () => {
   console.log("Starting server in port: ", port);
 });
 
-app.get("/snakes", async (_, res) => {
+app.get("/api/snakes", async (_, res) => {
   try {
     const { rows } = await turso.execute(getSnakesQuery);
     return res.send(rows);
@@ -33,7 +33,7 @@ app.get("/snakes", async (_, res) => {
   }
 });
 
-app.post("/feed_snake", async (req, res) => {
+app.post("/api/feed_snake", async (req, res) => {
   const { lastmeal, nextmeal, snakeId } = req.body;
 
   if (!lastmeal || !nextmeal || !snakeId) {
@@ -60,7 +60,7 @@ app.post("/feed_snake", async (req, res) => {
   }
 });
 
-app.get("/meal_history", async (req, res) => {
+app.get("/api/meal_history", async (req, res) => {
   const { snakeId } = req.query;
 
   if (!snakeId)
