@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: "pins",
+      name: "snakes",
       script: "./index.js",
       cwd: "/root/code/snake-meal-tracker/api",
       instances: 1,
